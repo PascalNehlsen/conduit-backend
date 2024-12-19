@@ -10,6 +10,10 @@ then
     pip install --user gunicorn
 fi
 
+# collect static files
+echo "Sammeln von statischen Dateien..."
+python manage.py collectstatic --noinput
+
 # Migrate database
 echo "Running database migrations..."
 python manage.py makemigrations || { echo "Makemigrations failed"; exit 1; }
@@ -36,4 +40,5 @@ python manage.py createsuperuser --noinput \
 
 # Start Django Server with gunicorn
 echo "Starting the server with gunicorn..."
-exec gunicorn conduit.wsgi:application --bind 0.0.0.0:8000
+exec gunicorn conduit.wsgi:application --bind 0.0.0.0:8000 --worker-class gthread
+

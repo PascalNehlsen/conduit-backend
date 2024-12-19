@@ -12,8 +12,10 @@ ENV PATH="/opt/venv/bin:$PATH"
 COPY conduit-backend/requirements.txt ${WORKDIR}
 RUN pip install --no-cache-dir -r requirements.txt
 
+EXPOSE 8000
+
 # Copy the project files into the container
-COPY conduit-backend/ ${WORKDIR}
+COPY conduit-backend ${WORKDIR}
 
 # Make entrypoint.sh executable
 RUN chmod +x entrypoint.sh
