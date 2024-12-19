@@ -11,7 +11,7 @@ then
 fi
 
 # collect static files
-echo "Sammeln von statischen Dateien..."
+echo "collect static files..."
 python manage.py collectstatic --noinput
 
 # Migrate database
