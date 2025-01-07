@@ -9,13 +9,13 @@ RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Copy the requirements.txt file and install the dependencies
-COPY conduit-backend/requirements.txt ${WORKDIR}
+COPY requirements.txt ${WORKDIR}
 RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 8000
 
 # Copy the project files into the container
-COPY conduit-backend ${WORKDIR}
+COPY . ${WORKDIR}
 
 # Make entrypoint.sh executable
 RUN chmod +x entrypoint.sh

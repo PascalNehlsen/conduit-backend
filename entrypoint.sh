@@ -19,20 +19,15 @@ echo "Running database migrations..."
 python manage.py makemigrations || { echo "Makemigrations failed"; exit 1; }
 python manage.py migrate || { echo "Migration failed"; exit 1; }
 
-# Load superuser credentials from .env
-if [ -f .env ]; then
-  export $(grep -v '^#' .env | xargs)
-fi;
-
 # Validate superuser credentials
 if [ -z "$DJANGO_SUPERUSER_USERNAME" ] || [ -z "$DJANGO_SUPERUSER_EMAIL" ] || [ -z "$DJANGO_SUPERUSER_PASSWORD" ]; then
-  echo "Superuser data is not set. Please check the .env file."
+  echo "Superuser data is not set. Please check your configuration."
   exit 1
 fi;
 
-echo "Creating superuser if not exists..."
+echo "Creating superuser..."
 
-# Check if superuser exists before attempting to create
+# Create new superuser
 python manage.py createsuperuser --noinput \
   --email "$DJANGO_SUPERUSER_EMAIL" \
   --username "$DJANGO_SUPERUSER_USERNAME"
